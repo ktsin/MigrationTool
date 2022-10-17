@@ -1,17 +1,25 @@
-namespace MigrationTool
+namespace MigrationTool;
+
+using Microsoft.Extensions.DependencyInjection;
+using MigrationTool.Services;
+
+public static class Program
 {
-    internal static class Program
+    public static IServiceProvider ServiceProvider { get; set; } = default!;
+
+    static void ConfigureServices()
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new MainWindow());
-        }
+        var services = new ServiceCollection();
+        services.AddSingleton<StateManager>();
+
+        ServiceProvider = services.BuildServiceProvider();
+    }
+
+    [STAThread]
+    static void Main()
+    {
+        ConfigureServices();
+        ApplicationConfiguration.Initialize();
+        Application.Run(new MainWindow());
     }
 }
