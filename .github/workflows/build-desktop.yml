@@ -58,3 +58,10 @@ jobs:
       with:
         name: Release
         path: ${{env.Publish_Location}}
+    
+    - name: Create a Release
+      uses: elgohr/Github-Release-Action@v4
+      env:
+        GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+      with:
+        title: MyReleaseMessage
